@@ -1,6 +1,7 @@
 import Head from "next/head";
-
+import { useSession, signIn, signOut } from "next-auth/react";
 export default function Home() {
+  const [session, loading] = useSession();
   return (
     <div
       className="flex flex-col items-center justify-center min-h-screen bg-black"
@@ -9,6 +10,23 @@ export default function Home() {
           "linear-gradient(rgb(0 0 0 / 60%), rgb(0 0 0 / 60%)), url(/Bili.jpg)",
       }}
     >
+      <div>
+        {!session ? (
+          <button
+            onClick={() => signIn("google")}
+            className="flex items-center bg-[#e50914] text-white text-sm px-4 py-2 rounded"
+          >
+            Sign In
+          </button>
+        ) : (
+          <button
+            onClick={() => signOut()}
+            className="flex items-center bg-[#e50914] text-white text-sm px-4 py-2 rounded"
+          >
+            Sign Out
+          </button>
+        )}
+      </div>
       <Head>
         <title>Netflix Clone</title>
         <link rel="icon" href="/favicon.ico" />
